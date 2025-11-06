@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -34,6 +34,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useSearchParams } from "next/navigation";
 
 const groupSchema = z.object({
   name: z.string().min(1, "Group name is required"),
@@ -66,14 +67,14 @@ export function GroupModal({ isOpen, onClose, onSuccess }) {
   });
 
   const addMember = (user) => {
-    if (!selectedMembers.some((m) => m.id === user.id)) {
-      setSelectedMembers([...selectedMembers, user]);
-    }
+    if (!selectedMembers.some((m) => m._id === user._id)) {
++      setSelectedMembers([...selectedMembers, user]);
+     }
     setCommandOpen(false);
   };
 
   const removeMember = (userId) => {
-    setSelectedMembers(selectedMembers.filter((m) => m.id !== userId));
+    setSelectedMembers(selectedMembers.filter((m) => m._id !== userId));
   };
 
   const onSubmit = async (data) => {

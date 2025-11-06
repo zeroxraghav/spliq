@@ -7,27 +7,45 @@ import { Button } from '@/components/ui/button'
 import { BarLoader } from 'react-spinners'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
+import { useEffect } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { User, Users } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import GroupModal from './_components/create-modal'
+import { useQuery } from 'convex/react'
+import { useSearchParams } from 'next/navigation'
 
 const page = () => {
-  const {data, isLoading, error} = useConvexQuery(api.contacts.getAllContacts);
+  const data = useQuery(api.contacts.getAllContacts);
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   
   console.log(data);
   const router = useRouter();
-  if (isLoading) {
+
+  const { users, groups } = data || { users: [], groups: [] };
+
+  const searchParam = useSearchParams();
+  useEffect(() => {
+    const groupCreated = searchParam.get("createGroup");
+    if (groupCreated === "true") {
+      setIsCreateGroupModalOpen(true);
+
+      const url = new URL(window.location.href);
+      url.searchParams.delete("createGroup");
+
+      router.replace(url.pathname + url.search);
+    }
+  }, [searchParam, router])
+
+  if (data === undefined) {
     return (
       <div className="container mx-auto py-12">
         <BarLoader width={"100%"} color="#36d7b7" />
       </div>
     );
   }
-  const { users, groups } = data || { users: [], groups: [] };
 
   return (  
     <div className="container mx-auto py-6">

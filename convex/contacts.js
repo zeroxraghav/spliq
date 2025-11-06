@@ -61,7 +61,7 @@ export const createGroup = mutation({
             name: args.name,
             description: args.description,
             createdBy: user._id,
-            members: args.members
+            members: Array.from(uniqueMembers),
         });
     }
 })
