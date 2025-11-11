@@ -32,7 +32,7 @@ export default function Home() {
         <div className="container mx-auto max-w-5xl overflow-hidden rounded-xl shadow-xl">
         <div className="bg-green-500 p-1 aspect-[16/9] transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1 hover:scale-[1.02]">
           <Image
-            src="/hero.png"
+            src="/hero2.png"
             width={1280}
             height={720}
             alt="Banner"

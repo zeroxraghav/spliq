@@ -23,7 +23,7 @@ import {
 
 const page = () => {
   const {data: balances, isLoading: balancesLoading} = useConvexQuery(api.dashboard.getUserBalances);
-  const {data: groupBalance, isLoading: groupBalanceLoading} = useConvexQuery(api.dashboard.getUserGroups);
+  const {data: groupsWithDetails, isLoading: groupBalanceLoading} = useConvexQuery(api.dashboard.getUserGroups);
   const {data: totalSpentBalance, isLoading: totalSpentLoading} = useConvexQuery(api.dashboard.getTotalSpent);
   const {data: monthlySpent, isLoading: monthlySpentLoading} = useConvexQuery(api.dashboard.getMonthlySpending);
 
@@ -32,11 +32,11 @@ const page = () => {
     <div>
       {isLoading ? (
         <div className="container mx-auto py-12">
-        <BarLoader width={"100%"} color="#36d7b7" />
-      </div>
+          <BarLoader width={"100%"} color="#36d7b7" />
+        </div>
       ) :(
       <>
-        <div className="flex  justify-between flex-col sm:flex-row sm:items-center gap-4">
+        <div className="flex justify-between flex-col sm:flex-row sm:items-center gap-4 mb-3">
             <h1 className="text-5xl gradient-title">Dashboard</h1>
             <Button asChild>
               <Link href="/expenses/new">
@@ -146,7 +146,7 @@ const page = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <GroupList groups={groupBalance} />
+                  <GroupList groups={groupsWithDetails} />
                 </CardContent>
                 <CardFooter>
                   <Button variant="outline" asChild className="w-full">

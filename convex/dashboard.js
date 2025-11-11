@@ -183,8 +183,18 @@ export const getUserGroups = query({
 
         const userGroupsDet = await ctx.db.query("groups").collect();
 
-        const userGroups = userGroupsDet.filter((g) => g.members.some((m) => m.userId === user._id));
-        
+        const userIdStr = String(user._id);
+        const userGroups = userGroupsDet.filter((g) =>
+          Array.isArray(g.members) && g.members.some((m) => {
+            if (m == null) return false;
+            // member can be an Id object, a plain string, or an object with userId/_id
+            if (typeof m === "object") {
+              if ("userId" in m) return String(m.userId) === userIdStr;
+              if ("_id" in m) return String(m._id) === userIdStr;
+            }
+            return String(m) === userIdStr;
+          })
+        );
 
         const groupsWithDetails = [];
 
@@ -198,7 +208,7 @@ export const getUserGroups = query({
             let balance = 0;
 
             expenses.forEach((expense) => {
-            if (expense.paidByUserId === user._id) {
+            if (expense.paidBy === user._id) {
                 // User paid for others
                 expense.splits.forEach((split) => {
                 if (split.userId !== user._id && !split.hasPaid) {
@@ -221,12 +231,12 @@ export const getUserGroups = query({
         .query("settlements")
         .withIndex("by_group", (q) => q.eq("groupId", group._id))
         .filter(
-            (s) => s.paidByUserId === user._id || s.receivedByUserId === user._id
+            (s) => s.paidBy === user._id || s.paidTo === user._id
         )
         .collect();
 
         settlements.forEach((settlement) => {
-          if (settlement.paidByUserId === user._id) {
+          if (settlement.paidBy === user._id) {
             // User paid someone
             balance += settlement.amount;
           } else {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ArrowUpCircle, ArrowDownCircle } from "lucide-react";
+import { useEffect } from "react";
 
 export function BalanceSummary({ balances }) {
   if (!balances) return null;
@@ -8,7 +9,6 @@ export function BalanceSummary({ balances }) {
   const { oweDetails } = balances;
   const hasOwed = oweDetails.youAreOwed.length > 0;
   const hasOwing = oweDetails.youOwe.length > 0;
-
   return (
     <div className="space-y-4">
       {!hasOwed && !hasOwing && (
@@ -26,7 +26,7 @@ export function BalanceSummary({ balances }) {
           <div className="space-y-3">
             {oweDetails.youAreOwed.map((item) => (
               <Link
-                href={`/person/${item.userId}`}
+                href={`/person/${item.id}`}
                 key={item.id}
                 className="flex items-center justify-between hover:bg-muted p-2 rounded-md transition-colors"
               >
