@@ -164,28 +164,26 @@ export const createExpense = mutation({
     },
 
     handler: async(ctx, args) => {
-        const user = ctx.runQuery(internal.users.getCurrentUser);
+        const user = await ctx.runQuery(internal.users.getCurrentUser);
 
         if (args.groupId) {
-            const group = ctx.db.get(args.groupId);
+            const group = await ctx.db.get(args.groupId);
             if (!group) {
                 throw new Error("Group not found");
             }
             
-            const isMember = group.members.some((m) => m._id === user._id);
+            console.log("GROUP DATA:", group);
+            const isMember = group.members.some((m) => m === user._id);
             if (!isMember) {
                 throw new Error("You are not a member of this group");
             }
         }
 
-        const totalSplit = 0;
-        for (const s of args.splits) {
-            totalSplit += s.amount;
-        }
-
-        const tolerance = 0.01;
-        if (Math.abs(totalSplit - args.amount) > tolerance) {
-            throw new Error("Splits do not add up to total amount");
+        const totalSplitAmount = args.splits.reduce(
+        (sum, split) => sum + split.amount,0);
+        const tolerance = 0.01; // Allow for small rounding errors
+        if (Math.abs(totalSplitAmount - args.amount) > tolerance) {
+        throw new Error("Split amounts must add up to the total expense amount");
         }
 
         const expId = await ctx.db.insert("expenses", {

@@ -20,11 +20,11 @@ export default function Header() {
       <nav className="container mx-auto px-4 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src={"/logos/logo-s.png"}
+            src={"/logos/logo4.png"}
             alt="Logo"
-            width={60}
-            height={60}
-            className="h-11 w-auto object-contain"
+            width={120}
+            height={120}
+            className="h-20 w-auto object-contain"
           />
         </Link>
 
@@ -74,7 +74,9 @@ export default function Header() {
 
           <Unauthenticated>
             <SignInButton>
-              <Button variant="ghost" className="text-base">Sign In</Button>
+              <Button variant="ghost" className="text-base">
+                Sign In
+              </Button>
             </SignInButton>
 
             <SignUpButton>

@@ -12,41 +12,61 @@ export default function Home() {
       {/* Hero */}
       <section className="mt-20 pb-16 space-y-10">
         <div className="container mx-auto px-4 text-center space-y-6">
-          <Badge variant="outline" className="bg-green-100 text-green-500 px-2 text-md" >Simplify expenses</Badge>
+          <Badge
+            variant="outline"
+            className="bg-green-100 text-green-500 px-2 text-md"
+          >
+            Simplify expenses
+          </Badge>
 
-          <h1 className="gradient-title mx-auto text-5xl max-w-4xl font-bold"> Smartest way to split expenses with your dumb friends</h1>
-          <p className="mx-auto text-gray-500 max-w-[700px] md:text-xl/relaxed">Track shared expenses. Settle up in a click. Trips just got better <span className="text-blue-700">FR</span></p>
+          <h1 className="gradient-title mx-auto text-5xl max-w-4xl font-bold">
+            {" "}
+            Smartest way to split expenses with your dumb friends
+          </h1>
+          <p className="mx-auto text-gray-500 max-w-[700px] md:text-xl/relaxed">
+            Track shared expenses. Settle up in a click. Trips just got better{" "}
+            <span className="text-blue-700">FR</span>
+          </p>
         </div>
 
         <div className="flex flex-row justify-center gap-2">
           <Button className="bg-green-600 hover:bg-green-700 border-none text-lg">
-            <Link href='/'>Get Started</Link>
-            <ArrowRight className="ml-2 h-2 w-4"/>
+            <Link href="/">Get Started</Link>
+            <ArrowRight className="ml-2 h-2 w-4" />
           </Button>
 
-          <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-100 text-lg">
+          <Button
+            variant="outline"
+            className="border-green-600 text-green-600 hover:bg-green-100 text-lg"
+          >
             <Link href="#how-it-works">Learn More</Link>
           </Button>
         </div>
 
         <div className="container mx-auto max-w-5xl overflow-hidden rounded-xl shadow-xl">
-        <div className="bg-green-500 p-1 aspect-[16/9] transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1 hover:scale-[1.02]">
-          <Image
-            src="/hero2.png"
-            width={1280}
-            height={720}
-            alt="Banner"
-            className="rounded-lg mx-auto"
-            priority
-          />
+          <div className="bg-green-500 p-1 aspect-[16/9] transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1 hover:scale-[1.02]">
+            <Image
+              src="/hero2.png"
+              width={1280}
+              height={720}
+              alt="Banner"
+              className="rounded-lg mx-auto"
+              priority
+            />
+          </div>
         </div>
-      </div>
       </section>
 
       {/* Features */}
       <section id="features" className="bg-gray-50 py-20">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <Badge variant="outline" className="bg-green-100 text-green-500 px-2 text-md" > Features </Badge>
+          <Badge
+            variant="outline"
+            className="bg-green-100 text-green-500 px-2 text-md"
+          >
+            {" "}
+            Features{" "}
+          </Badge>
           <h2 className="gradient-title mt-2 text-3xl md:text-4xl font-bold">
             Everything you need to split expenses
           </h2>
@@ -76,7 +96,13 @@ export default function Home() {
       {/* How it works */}
       <section id="how-it-works" className="py-20">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <Badge variant="outline" className="bg-green-100 text-green-500 px-2 text-md" > How it works </Badge>
+          <Badge
+            variant="outline"
+            className="bg-green-100 text-green-500 px-2 text-md"
+          >
+            {" "}
+            How it works{" "}
+          </Badge>
           <h2 className="gradient-title mt-2 text-3xl md:text-4xl font-bold">
             Splitting expenses has never been easier
           </h2>
@@ -120,7 +146,7 @@ export default function Home() {
 
       {/* ───── Footer ───── */}
       <footer className="border-t bg-gray-50 py-12 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} WhoPay. All rights reserved.
+        © {new Date().getFullYear()} Spliq. All rights reserved.
       </footer>
     </div>
   );

@@ -1,15 +1,15 @@
-import React from 'react'
-import { useConvexQuery } from '@/hooks/use-convex-query';
-import { useConvexMutation } from '@/hooks/use-convex-query';
-import { api } from '@/convex/_generated/api';
-import { Card, CardContent } from '@/components/ui/card';
+import React from "react";
+import { useConvexQuery } from "@/hooks/use-convex-query";
+import { useConvexMutation } from "@/hooks/use-convex-query";
+import { api } from "@/convex/_generated/api";
+import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Trash2 } from 'lucide-react';
-import { format } from 'date-fns';
-import { getCategoryById, getCategoryIcon } from '@/lib/expense-categories';
-import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
+import { format } from "date-fns";
+import { getCategoryById, getCategoryIcon } from "@/lib/expense-categories";
+import { Badge } from "@/components/ui/badge";
 
 const ExpenseList = ({
   expenses,
@@ -50,7 +50,7 @@ const ExpenseList = ({
     if (!currentUser) return false;
     return (
       expense.createdBy === currentUser._id ||
-      expense.paidBy=== currentUser._id
+      expense.paidBy === currentUser._id
     );
   };
 
@@ -74,20 +74,17 @@ const ExpenseList = ({
   return (
     <div>
       {expenses.map((e) => {
-        const payer = getUserDetails(e.paidBy)
+        const payer = getUserDetails(e.paidBy);
         const isCurrentUserPayer = currentUser && e.paidBy === currentUser._id;
         const category = getCategoryById(e.category);
-      
+
         const CategoryIcon = getCategoryIcon(category.id);
         const showDelete = canDeleteExpense(e);
 
         return (
-          <Card
-            className="hover:bg-muted/30 transition-colors"
-            key={e._id}
-          >
-            <CardContent className='py-4'>
-                <div className="flex items-center justify-between">
+          <Card className="hover:bg-muted/30 transition-colors" key={e._id}>
+            <CardContent className="py-4">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   {/* Category icon */}
                   <div className="bg-primary/10 p-2 rounded-full">
@@ -97,9 +94,7 @@ const ExpenseList = ({
                   <div>
                     <h3 className="font-medium">{e.description}</h3>
                     <div className="flex items-center text-sm text-muted-foreground gap-2">
-                      <span>
-                        {format(new Date(e.date), "MMM d, yyyy")}
-                      </span>
+                      <span>{format(new Date(e.date), "MMM d, yyyy")}</span>
                       {showOtherPerson && (
                         <>
                           <span>•</span>
@@ -114,9 +109,7 @@ const ExpenseList = ({
 
                 <div className="flex items-center gap-2">
                   <div className="text-right">
-                    <div className="font-medium">
-                      ${e.amount.toFixed(2)}
-                    </div>
+                    <div className="font-medium">₹{e.amount.toFixed(2)}</div>
                     {isGroupExpense ? (
                       <Badge variant="outline" className="mt-1">
                         Group expense
@@ -175,7 +168,7 @@ const ExpenseList = ({
                           </AvatarFallback>
                         </Avatar>
                         <span>
-                          {isCurrentUser ? "You" : splitUser.name}: $
+                          {isCurrentUser ? "You" : splitUser.name}: ₹
                           {split.amount.toFixed(2)}
                         </span>
                       </Badge>
@@ -185,10 +178,10 @@ const ExpenseList = ({
               </div>
             </CardContent>
           </Card>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default ExpenseList
+export default ExpenseList;

@@ -32,7 +32,7 @@ export const useConvexQuery = (query, ...args) => {
   };
 };
 
-export const useConvexMutation = (mut, ...args) => {
+export const useConvexMutation = (mut) => {
     const mutFn = useMutation(mut);
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState(null);

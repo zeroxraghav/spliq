@@ -1,40 +1,43 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react'
-import { useParams } from 'next/navigation'
-import { useConvexQuery } from '@/hooks/use-convex-query';
-import { api } from '@/convex/_generated/api';
-import { BarLoader } from 'react-spinners';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, ArrowLeftRight, PlusCircle } from 'lucide-react';
-import Link from 'next/link';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import ExpenseList from '@/components/expense-list';
-import SettlementList from '@/components/settlement-list';
-import { useRouter } from 'next/navigation';
+import React, { useState } from "react";
+import { useParams } from "next/navigation";
+import { useConvexQuery } from "@/hooks/use-convex-query";
+import { api } from "@/convex/_generated/api";
+import { BarLoader } from "react-spinners";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, ArrowLeftRight, PlusCircle } from "lucide-react";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ExpenseList from "@/components/expense-list";
+import SettlementList from "@/components/settlement-list";
+import { useRouter } from "next/navigation";
 
 const PersonPage = () => {
-    const [activeTab, setActiveTab] = useState("expenses");
-    const params = useParams();
-    const router = useRouter();
-    const {data, isLoading} = useConvexQuery(api.expenses.getExpenseBetweenUsers, { userId: params.id });
+  const [activeTab, setActiveTab] = useState("expenses");
+  const params = useParams();
+  const router = useRouter();
+  const { data, isLoading } = useConvexQuery(
+    api.expenses.getExpenseBetweenUsers,
+    { userId: params.id }
+  );
 
-    if (isLoading) {
-        return (
-          <div className="container mx-auto py-12">
-            <BarLoader width={"100%"} color="#36d7b7" />
-          </div>
-        );
-    }
-
-    const otherUser = data?.otherUser;
-    const expenses = data?.filteredExpenses || [];
-    const settlements = data?.settlements || [];
-    const balance = data?.balance || 0;
-
+  if (isLoading) {
     return (
+      <div className="container mx-auto py-12">
+        <BarLoader width={"100%"} color="#36d7b7" />
+      </div>
+    );
+  }
+
+  const otherUser = data?.otherUser;
+  const expenses = data?.filteredExpenses || [];
+  const settlements = data?.settlements || [];
+  const balance = data?.balance || 0;
+
+  return (
     <div className="container mx-auto py-6 max-w-4xl">
       <div className="mb-6">
         <Button
@@ -102,7 +105,7 @@ const PersonPage = () => {
             <div
               className={`text-2xl font-bold ${balance > 0 ? "text-green-600" : balance < 0 ? "text-red-600" : ""}`}
             >
-              ${Math.abs(balance).toFixed(2)}
+              ₹{Math.abs(balance).toFixed(2)}
             </div>
           </div>
         </CardContent>
@@ -131,7 +134,7 @@ const PersonPage = () => {
             otherPersonId={params.id}
             userLookupMap={{ [otherUser.id]: otherUser }}
           />
-        </TabsContent> 
+        </TabsContent>
 
         <TabsContent value="settlements" className="space-y-4">
           <SettlementList
@@ -142,6 +145,6 @@ const PersonPage = () => {
       </Tabs>
     </div>
   );
-}
+};
 
-export default PersonPage
+export default PersonPage;

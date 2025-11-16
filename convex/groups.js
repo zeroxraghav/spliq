@@ -120,28 +120,64 @@ export const getGroupOrMembers = query({
     handler: async (ctx, args) => {
         const user = await ctx.runQuery(api.users.getCurrentUser);
         
-        const allGroups = await ctx.db.get("groups");
-        const userGroups = allGroups.filter((g) => g.members.some((m) => m._id === user._id));
-
+        const allGroups = await ctx.db.query("groups").collect();
+         const userGroups = allGroups.filter(
+      (g) => Array.isArray(g.members) && g.members.includes(user._id)
+    );
         if (args.groupId) {
             const group = userGroups.find((g) => g._id === args.groupId);
             if (!group) {
                 throw new Error("Group not found or you are not a member");
             }
             
-            const memberDetails = await Promise.all(
-                group.members.map((m) => {
-                    const mem = ctx.db.get(m._id);
 
+            console.log("Members:", group.members);
+            const memberDetails = await Promise.all(
+                group.members.map(async (m) => {
+                    console.log("Fetching member:", m);
+                    const mem = await ctx.db.get(m);
+                    if (!mem) return null;
                     return {
                         id: mem._id,
                         name: mem.name,
                         email: mem.email,
                         imageUrl: mem.imageURL,
-                        
                     }
                 })
             );
+
+            const validMembers = memberDetails.filter((m) => m !== null);
+
+            return {
+                selectedGroup : {
+                    id:  group._id,
+                    name: group.name,
+                    description: group.description,
+                    createdBy: group.createdBy,
+                    members: validMembers,
+                },
+                groups: userGroups.map((g) => {
+                    return {
+                        id: g._id,
+                        name: g.name,
+                        description: g.description,
+                        memberCount: g.members.length,
+                    }
+                })
+            }
+        }
+        else {
+            return {
+                selectedGroup: null,
+                groups: userGroups.map((g) => {
+                    return {
+                        id: g._id,
+                        name: g.name,
+                        description: g.description,
+                        memberCount: g.members.length,
+                    }
+                })
+            }
         }
 
     }   

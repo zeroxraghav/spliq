@@ -45,8 +45,7 @@ const SettlementList = ({
         const payer = getUserDetails(settlement.paidBy);
         const receiver = getUserDetails(settlement.paidTo);
         const isCurrentUserPayer = settlement.paidBy === currentUser?._id;
-        const isCurrentUserReceiver =
-          settlement.paidTo === currentUser?._id;
+        const isCurrentUserReceiver = settlement.paidTo === currentUser?._id;
 
         return (
           <Card
@@ -85,7 +84,7 @@ const SettlementList = ({
 
                 <div className="text-right">
                   <div className="font-medium">
-                    ${settlement.amount.toFixed(2)}
+                    ₹{settlement.amount.toFixed(2)}
                   </div>
                   {isGroupSettlement ? (
                     <Badge variant="outline" className="mt-1">
@@ -110,6 +109,6 @@ const SettlementList = ({
       })}
     </div>
   );
-}
+};
 
-export default SettlementList
+export default SettlementList;
