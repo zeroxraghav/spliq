@@ -142,7 +142,7 @@ export const getSettlementData = query({
             const group = await ctx.db.get(args.entityId);
             if (!group) throw new Error("Group not found");
 
-            const isMember = group.members.some((m) => m.userId === user._id);
+            const isMember = group.members.some((m) => m=== user._id);
             if (!isMember) throw new Error("You are not a member of this group");
 
             // ---------- expenses for this group

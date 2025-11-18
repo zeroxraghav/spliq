@@ -111,19 +111,19 @@ const ExpenseForm = ({ type, onSuccess }) => {
       const groupId =
         type === "individual" || !data.groupId ? undefined : data.groupId;
 
-      // await createExpense.mutationFunction({
-      //   description: data.description,
-      //   amount: amount,
-      //   category: data.category || "Other",
-      //   date: data.date.getTime(),
-      //   paidBy: data.paidBy,
-      //   splitType: data.splitType,
-      //   splits: formattedSplits,
-      //   groupId,
-      // });
+      await createExpense.mutationFunction({
+        description: data.description,
+        amount: amount,
+        category: data.category || "Other",
+        date: data.date.getTime(),
+        paidBy: data.paidBy,
+        splitType: data.splitType,
+        splits: formattedSplits,
+        groupId,
+      });
 
-      // toast.success("Expense created successfully!");
-      // reset();
+      toast.success("Expense created successfully!");
+      reset();
 
       const otherParticipant = participants.find((p) => p.id !== user._id);
       const otherUserId = otherParticipant?.id;

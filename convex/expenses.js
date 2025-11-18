@@ -198,6 +198,8 @@ export const createExpense = mutation({
             createdBy: user._id,
         });
 
+        console.log("Expense donee")
+
         return expId;
     }
 });

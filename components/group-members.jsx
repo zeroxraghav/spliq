@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useConvexQuery } from "@/hooks/use-convex-query";
@@ -24,7 +23,7 @@ const GroupMembers = ({ members }) => {
         const isAdmin = member.role === "admin";
 
         return (
-          <div key={member.id} className="flex items-center justify-between">
+          <div key={member._id} className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Avatar className="h-8 w-8">
                 <AvatarImage src={member.imageURL} />
@@ -51,6 +50,6 @@ const GroupMembers = ({ members }) => {
       })}
     </div>
   );
-}
+};
 
 export default GroupMembers;
